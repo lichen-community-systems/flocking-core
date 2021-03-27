@@ -1,0 +1,11 @@
+name: build-and-run
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: [windows-latest, ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cargo build
+        run: cargo build
+      - name: Run
+        run: cargo run
