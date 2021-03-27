@@ -2,7 +2,10 @@ name: build-and-run
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: [windows-latest, ubuntu-latest, macos-latest]
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - name: Cargo build
