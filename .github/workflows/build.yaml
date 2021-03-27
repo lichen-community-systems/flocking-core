@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
   build:
     strategy:
+      fast-fail: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
