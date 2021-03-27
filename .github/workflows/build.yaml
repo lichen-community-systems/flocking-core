@@ -9,7 +9,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install ALSA dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get install libasound2-dev
+
       - name: Cargo build
         run: cargo build
+
       - name: Run
         run: cargo run
