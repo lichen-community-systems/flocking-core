@@ -54,26 +54,78 @@ fn print_device_configs(device: &cpal::Device) {
     };
 }
 
-fn print_device(device: &cpal::Device,
-    default_input_name: &String, default_output_name: &String) {
-    let device_name = device.name()
-        .expect("The device name is not available");
-
-    let device_name_label = {
-        let mut label = String::new();
-        if device_name == *default_input_name {
-            label.push_str("[default input] ");
+fn is_same_device(left: &cpal::Device, right: &cpal::Device) -> bool {
+    // TODO:
+    // 1. Is there any more reasonable way to compare Devices except by name?
+    // 2. How do I express this more idiomatically?
+    match left.name() {
+        Ok(left_device_name) => {
+            match right.name() {
+                Ok(right_device_name) => {
+                    if left_device_name == right_device_name {
+                        true
+                    } else {
+                        false
+                    }
+                },
+                Err(_e) => {
+                    false
+                }
+            }
+        },
+        Err(_e) => {
+            false
         }
+    }
+}
 
-        if device_name == *default_output_name {
-            label.push_str("[default output]");
-        }
+fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
+    let mut device_name_label = String::new();
 
-        label
+    match host.default_input_device() {
+        Some(default_input_device) => {
+            if is_same_device(device, &default_input_device) {
+                device_name_label.push_str("[default input] ");
+            }
+        },
+
+        None => println!("No default input device is available for this host.")
+    }
+
+    match host.default_output_device() {
+        Some(default_output_device) => {
+            if is_same_device(device, &default_output_device) {
+                device_name_label.push_str("[default output] ");
+            }
+        },
+
+        None => println!("No default output device is available for this host.")
+    }
+
+    device_name_label
+}
+
+fn print_device(device: &cpal::Device, host: &cpal::Host) {
+    let device_name_label = label_for_device(device, host);
+
+    let formatted_device_name = match device.name() {
+        Ok(device_name) => device_name,
+        Err(_e) => String::from("Unnamed Device")
     };
 
-    println!("  * {} {}", device_name, device_name_label);
+    println!("  * {} {}", formatted_device_name, device_name_label);
     print_device_configs(device);
+}
+
+fn print_devices(host: cpal::Host) {
+    match host.devices() {
+        Ok(devices) => {
+            for device in devices {
+                print_device(&device, &host);
+            }
+        },
+        Err(e) => println!("No devices are available for this host. {}", e)
+    }
 }
 
 fn main() {
@@ -82,28 +134,15 @@ fn main() {
     println!("Hosts");
     println!("-----");
     for host_id in cpal::available_hosts() {
-        let host = cpal::host_from_id(host_id).expect("Host is not available.");
         print_host(host_id, default_host.id());
 
-        let default_input = host.default_input_device()
-            .expect("The default input device is not available.");
-
-        let default_input_name = default_input.name()
-            .expect("The default input name is not available.");
-
-        let default_output = host.default_output_device()
-            .expect("The host's default output device is not available.");
-
-        let default_output_name = default_output.name()
-            .expect("The default output name is not available.");
-
-        let devices = host.devices()
-            .expect("The host's devices are not available.");
-
-        for device in devices {
-            print_device(&device, &default_input_name, &default_output_name);
+        match cpal::host_from_id(host_id) {
+            Ok(host)=> {
+                print_devices(host);
+            },
+            Err(e) => {
+                println!("The {:?} host is unvailable. {}", host_id, e);
+            }
         }
     }
-
-
 }
