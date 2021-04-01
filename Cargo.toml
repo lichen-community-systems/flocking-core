@@ -5,4 +5,4 @@ authors = ["Colin Clark <colinbdclark@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-cpal = "0.13.1"
+cpal = {version = "0.13.1", features = ["jack"]}
