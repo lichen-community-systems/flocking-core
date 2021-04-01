@@ -520,7 +520,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3286f09f7d4926fc486334f28d8d2e6ebe4f7f9994494b6dab27ddfad2c9b11b"
 
 [[package]]
-name = "libflock-cpal"
+name = "libflock_cpal"
 version = "0.0.1"
 dependencies = [
  "cpal",

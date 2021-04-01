@@ -1,5 +1,22 @@
 use cpal::traits::{HostTrait, DeviceTrait};
 
+pub fn print_audio_system_tree() {
+    let default_host = cpal::default_host();
+
+    for host_id in cpal::available_hosts() {
+        print_host(host_id, default_host.id());
+
+        match cpal::host_from_id(host_id) {
+            Ok(host)=> {
+                print_devices(host);
+            },
+            Err(e) => {
+                println!("The {:?} host is unvailable. {}", host_id, e);
+            }
+        }
+    }
+}
+
 fn print_host(host_id: cpal::HostId, default_host_id: cpal::HostId) {
     let host_label = {
         if host_id == default_host_id {
@@ -125,24 +142,5 @@ fn print_devices(host: cpal::Host) {
             }
         },
         Err(e) => println!("No devices are available for this host. {}", e)
-    }
-}
-
-fn main() {
-    let default_host = cpal::default_host();
-
-    println!("Hosts");
-    println!("-----");
-    for host_id in cpal::available_hosts() {
-        print_host(host_id, default_host.id());
-
-        match cpal::host_from_id(host_id) {
-            Ok(host)=> {
-                print_devices(host);
-            },
-            Err(e) => {
-                println!("The {:?} host is unvailable. {}", host_id, e);
-            }
-        }
     }
 }

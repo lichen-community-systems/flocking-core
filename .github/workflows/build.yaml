@@ -18,7 +18,7 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Install ALSA dependencies
+      - name: Install audio dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get install libasound2-dev
 
@@ -37,7 +37,8 @@ jobs:
         with:
           command: build
 
-      - name: cargo run
+      - name: run print_audio_tree example
         uses: actions-rs/cargo@v1
         with:
           command: run
+          args: --example print_audio_tree
