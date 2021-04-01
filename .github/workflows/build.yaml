@@ -24,7 +24,7 @@ jobs:
 
       - name: Start jackd on Linux
         if: runner.os == 'Linux'
-        run: sudo jackd -r -d alsa -r 44100 &
+        run: sudo jackd -r -d dummy &
 
       - name: cargo check
         uses: actions-rs/cargo@v1
