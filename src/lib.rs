@@ -72,28 +72,12 @@ fn print_device_configs(device: &cpal::Device) {
 }
 
 fn is_same_device(left: &cpal::Device, right: &cpal::Device) -> bool {
-    // TODO:
-    // 1. Is there any more reasonable way to compare Devices except by name?
-    // 2. How do I express this more idiomatically?
-    match left.name() {
-        Ok(left_device_name) => {
-            match right.name() {
-                Ok(right_device_name) => {
-                    if left_device_name == right_device_name {
-                        true
-                    } else {
-                        false
-                    }
-                },
-                Err(_e) => {
-                    false
-                }
-            }
-        },
-        Err(_e) => {
-            false
+    if let Ok(left_device_name) = left.name() {
+        if let Ok(right_device_name) = right.name() {
+            return left_device_name == right_device_name;
         }
-    }
+    } 
+    false
 }
 
 fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
