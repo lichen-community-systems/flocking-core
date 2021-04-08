@@ -20,11 +20,11 @@ jobs:
 
       - name: Install Linux audio dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get install libasound2-dev jackd2 libjack-jackd2-dev
+        run: sudo apt-get install libasound2-dev jackd2 libjack-jackd2-dev libjack-jackd2-0
 
       - name: Start jackd on Linux
         if: runner.os == 'Linux'
-        run: sudo jackd -r -d dummy &
+        run: jackd -r -d dummy &
 
       - name: cargo check
         uses: actions-rs/cargo@v1
