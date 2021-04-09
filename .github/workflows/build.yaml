@@ -24,7 +24,11 @@ jobs:
 
       - name: Install Windows dependencies
         if: runner.os == 'Windows'
-        run: choco install vb-cable
+        run: choco install vb-cable --limit-output
+
+      - name: Display vb-cable directory
+        if: runner.os == 'Windows'
+        run: dir C:\ProgramData\chocolatey\lib\vb-cable\tools
 
       - name: Start jackd on Linux
         if: runner.os == 'Linux'
