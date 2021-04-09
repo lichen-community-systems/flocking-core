@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      CPAL_ASIO_DIR: "$Env:GITHUB_WORKSPACE\asio"
+      CPAL_ASIO_DIR: "$Env:GITHUB_WORKSPACE\\asio"
 
     steps:
       - uses: actions/checkout@v2
