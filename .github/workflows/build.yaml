@@ -51,6 +51,8 @@ jobs:
           command: build
 
       - name: run print_audio_tree example
+        env:
+          RUST_BACKTRACE: 1
         uses: actions-rs/cargo@v1
         with:
           command: run
