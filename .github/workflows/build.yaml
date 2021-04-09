@@ -22,6 +22,10 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get install libasound2-dev jackd2 libjack-jackd2-dev libjack-jackd2-0
 
+      - name: Install Windows dependencies
+        if: runner.os = 'Windows'
+        run: choco install vb-cable
+
       - name: Start jackd on Linux
         if: runner.os == 'Linux'
         run: jackd -r -d dummy &
