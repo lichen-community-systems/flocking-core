@@ -22,7 +22,7 @@ pub fn print_audio_system_tree() {
         print_host(host_id, default_host.id());
 
         if HOST_ENUMERATION_BLACKLIST.contains(&host_id.name()) {
-            println!("  Cannot enumerate {} devices.",
+            println!("  Skipping {} devices.",
                 host_id.name());
             continue;
         }
