@@ -1,0 +1,12 @@
+[package]
+name = "flocking_cpal"
+version = "0.0.1"
+authors = ["Colin Clark <colinbdclark@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+cpal = {version = "0.13.1", features = ["jack", "asio"]}
+flocking = { path = "../flocking" }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+clang-sys = "0.29.3"

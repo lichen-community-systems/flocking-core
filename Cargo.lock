@@ -318,6 +318,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "flocking"
+version = "0.0.1"
+
+[[package]]
+name = "flocking_cpal"
+version = "0.0.1"
+dependencies = [
+ "clang-sys",
+ "cpal",
+ "flocking",
+]
+
+[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -440,14 +453,6 @@ name = "libc"
 version = "0.2.93"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9385f66bf6105b241aa65a61cb923ef20efc665cb9f9bb50ac2f0c4b7f378d41"
-
-[[package]]
-name = "libflock_cpal"
-version = "0.0.1"
-dependencies = [
- "clang-sys",
- "cpal",
-]
 
 [[package]]
 name = "libloading"

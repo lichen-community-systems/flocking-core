@@ -1,0 +1,5 @@
+[package]
+name = "flocking"
+version = "0.0.1"
+authors = ["Colin Clark <colinbdclark@gmail.com>"]
+edition = "2018"
