@@ -1,17 +1,38 @@
 use cpal::traits::{HostTrait, DeviceTrait};
 
+// CPAL has a bug where it will panic if WASAPI devices are
+// enumerated after ASIO devices. Until this is fixed, we
+// simply refuse to enumerate WASAPI devices.
+// The issue is likely due to ASIO and CPAL's WASAPI
+// implementation initializing COM in the same thread using
+// incompatible threading models. For more infromation, see:
+//   https://github.com/RustAudio/cpal/issues/538
+//   https://github.com/RustAudio/cpal/pull/504
+//   https://github.com/RustAudio/cpal/pull/441
+const HOST_ENUMERATION_BLACKLIST: &'static [&'static str] = if cfg!(windows) {
+    &["WASAPI"]
+} else {
+    &[]
+};
+
 pub fn print_audio_system_tree() {
     let default_host = cpal::default_host();
 
     for host_id in cpal::available_hosts() {
         print_host(host_id, default_host.id());
 
+        if HOST_ENUMERATION_BLACKLIST.contains(&host_id.name()) {
+            println!("  Skipping {} devices.",
+                host_id.name());
+            continue;
+        }
+
         match cpal::host_from_id(host_id) {
             Ok(host)=> {
                 print_devices(host);
             },
             Err(e) => {
-                println!("The {:?} host is unvailable. {}", host_id, e);
+                println!("  The {:?} host is unvailable. {}", host_id, e);
             }
         }
     }
@@ -72,28 +93,12 @@ fn print_device_configs(device: &cpal::Device) {
 }
 
 fn is_same_device(left: &cpal::Device, right: &cpal::Device) -> bool {
-    // TODO:
-    // 1. Is there any more reasonable way to compare Devices except by name?
-    // 2. How do I express this more idiomatically?
-    match left.name() {
-        Ok(left_device_name) => {
-            match right.name() {
-                Ok(right_device_name) => {
-                    if left_device_name == right_device_name {
-                        true
-                    } else {
-                        false
-                    }
-                },
-                Err(_e) => {
-                    false
-                }
-            }
-        },
-        Err(_e) => {
-            false
+    if let Ok(left_device_name) = left.name() {
+        if let Ok(right_device_name) = right.name() {
+            return left_device_name == right_device_name;
         }
     }
+    false
 }
 
 fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
@@ -106,7 +111,7 @@ fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
             }
         },
 
-        None => println!("No default input device is available for this host.")
+        None => println!("  No default input device is available for this host.")
     }
 
     match host.default_output_device() {
@@ -116,7 +121,7 @@ fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
             }
         },
 
-        None => println!("No default output device is available for this host.")
+        None => println!("  No default output device is available for this host.")
     }
 
     device_name_label

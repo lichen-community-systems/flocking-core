@@ -11,6 +11,9 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      CPAL_ASIO_DIR: ${{ github.workspace }}/asio
+
     steps:
       - uses: actions/checkout@v2
 
@@ -42,6 +45,16 @@ jobs:
         if: runner.os == 'Linux'
         run: jackd -r -d dummy &
 
+      - name: Install Widows ASIO SDK
+        if: runner.os == 'Windows'
+        env:
+          LINK: https://www.steinberg.net/asiosdk
+        run: |
+          curl -L -o asio.zip $env:LINK
+          7z x -oasio asio.zip
+          move asio\*\* asio\
+          choco install asio4all llvm
+
       - name: cargo check
         uses: actions-rs/cargo@v1
         with:
@@ -58,6 +71,8 @@ jobs:
           command: build
 
       - name: run print_audio_tree example
+        env:
+          RUST_BACKTRACE: 1
         uses: actions-rs/cargo@v1
         with:
           command: run

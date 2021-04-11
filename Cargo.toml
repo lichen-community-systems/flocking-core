@@ -5,4 +5,7 @@ authors = ["Colin Clark <colinbdclark@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-cpal = {version = "0.13.1", features = ["jack"]}
+cpal = {version = "0.13.1", features = ["jack", "asio"]}
+
+[target.'cfg(target_os = "windows")'.dependencies]
+clang-sys = "0.29.3"
