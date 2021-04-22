@@ -60,6 +60,11 @@ jobs:
         with:
           command: check
 
+      - name: cargo clippy
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+
       - name: cargo test
         uses: actions-rs/cargo@v1
         with:
