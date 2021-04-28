@@ -1,31 +1,10 @@
 use cpal::traits::{HostTrait, DeviceTrait};
 
-// CPAL has a bug where it will panic if WASAPI devices are
-// enumerated after ASIO devices. Until this is fixed, we
-// simply refuse to enumerate WASAPI devices.
-// The issue is likely due to ASIO and CPAL's WASAPI
-// implementation initializing COM in the same thread using
-// incompatible threading models. For more infromation, see:
-//   https://github.com/RustAudio/cpal/issues/538
-//   https://github.com/RustAudio/cpal/pull/504
-//   https://github.com/RustAudio/cpal/pull/441
-const HOST_ENUMERATION_BLACKLIST: &'static [&'static str] = if cfg!(windows) {
-    &["WASAPI"]
-} else {
-    &[]
-};
-
 pub fn print_audio_system_tree() {
     let default_host = cpal::default_host();
 
     for host_id in cpal::available_hosts() {
         print_host(host_id, default_host.id());
-
-        if HOST_ENUMERATION_BLACKLIST.contains(&host_id.name()) {
-            println!("  Skipping {} devices.",
-                host_id.name());
-            continue;
-        }
 
         match cpal::host_from_id(host_id) {
             Ok(host)=> {

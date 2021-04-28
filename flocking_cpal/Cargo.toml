@@ -5,8 +5,8 @@ authors = ["Colin Clark <colinbdclark@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-cpal = {version = "0.13.1", features = ["jack", "asio"]}
 flocking = { path = "../flocking" }
+cpal = "0.13.3"
 
-[target.'cfg(target_os = "windows")'.dependencies]
-clang-sys = "0.29.3"
+[target.'cfg(target_os = "linux")'.dependencies]
+cpal = {version = "0.13.3", features = ["jack"]}
