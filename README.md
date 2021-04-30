@@ -6,11 +6,12 @@ This project is an early-stage effort to rewrite and redesign the core signal pr
 
 * Support deployment on the Web (via Web Assembly), desktop and mobile operating systems (macOS, Windows, Linux, iOS), specialized audio OS-based environments (Bela), and microcontroller-based systems (Daisy).
 * Provide a highly mutable audio graph, so that instruments can be dynamically reconfigured while they are running (on platforms where this is appropriate).
+* Provide first-class support for using signal generators in non-audio environments such as video processing tools like [Bubbles](https://github.com/colinbdclark/bubbles).
 * Make it easier to compose signal processing algorithms from smaller, self-contained pieces; avoid Flocking's (and SuperCollider's) formal distinction between unit generators and synths.
 * Support variable sample block sizes that can be mixed together in the same graph, including single-sample graphs.
 * Support cyclical graphs, multiplexing/demultiplexing of signals, and multiple channels
 * Serve as a foundation for supporting [open authorial practices](https://github.com/amb26/papers/blob/master/onward-2016/onward-2016.pdf) while offering a very low-level signal graph data representation and API upon which more supportive abstractions can be layered.
-* Provide a multiprocess-friendly architecture that will support splitting up an applicaiton into two main parts:
+* Provide a multiprocess-friendly architecture that will support splitting up an application into two main parts:
    * A realtime audio process that:
         * Allocates no memory
         * Takes no locks
