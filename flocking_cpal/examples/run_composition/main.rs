@@ -10,7 +10,8 @@ fn run (composition_file_path: String) -> Result<(), Box<dyn Error>> {
 
     let environment = flocking_cpal::env::Environment::new(composition_spec.environment);
 
-    println!("{:?}", environment);
+    println!("Selected host: {:?}", environment.host.id());
+    println!("{:?}", environment.settings);
 
     Ok(())
 }

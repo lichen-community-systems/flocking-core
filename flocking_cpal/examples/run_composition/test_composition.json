@@ -1,5 +1,8 @@
 {
     "environment": {
-        "sample_rate": 44100
+        "host": "WASAPI",
+        "sample_rate": 44100,
+        "buffer_size": 64,
+        "block_size": 64
     }
 }

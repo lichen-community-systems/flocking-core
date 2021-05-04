@@ -1,20 +1,22 @@
 pub mod json;
+pub mod utils;
 
 use serde::{Deserialize, Serialize};
+use merge::Merge;
 
 // TODO: Replace this with an equivalent no-std alloc collection.
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]
+#[derive(Clone, Merge, Serialize, Deserialize, Eq, PartialEq, Debug)]
 pub struct EnvironmentSettings {
-    host: Option<String>,
-    input_device: Option<String>,
-    output_device: Option<String>,
-    num_input_channels: Option<u32>,
-    num_output_channels: Option<u32>,
-    sample_rate: Option<u32>,
-    buffer_size: Option<u32>,
-    block_size: Option<u32>
+    pub host: Option<String>,
+    pub input_device: Option<String>,
+    pub output_device: Option<String>,
+    pub num_input_channels: Option<u32>,
+    pub num_output_channels: Option<u32>,
+    pub sample_rate: Option<u32>,
+    pub buffer_size: Option<u32>,
+    pub block_size: Option<u32>
 }
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]

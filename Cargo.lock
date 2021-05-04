@@ -217,6 +217,7 @@ dependencies = [
 name = "flocking"
 version = "0.0.1"
 dependencies = [
+ "merge",
  "serde",
  "serde_json",
 ]
@@ -227,6 +228,7 @@ version = "0.0.1"
 dependencies = [
  "cpal",
  "flocking",
+ "merge",
 ]
 
 [[package]]
@@ -393,6 +395,27 @@ name = "memchr"
 version = "2.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ee1c47aaa256ecabcaea351eae4a9b01ef39ed810004e298d2511ed284b1525"
+
+[[package]]
+name = "merge"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "10bbef93abb1da61525bbc45eeaff6473a41907d19f8f9aa5168d214e10693e9"
+dependencies = [
+ "merge_derive",
+]
+
+[[package]]
+name = "merge_derive"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "209d075476da2e63b4b29e72a2ef627b840589588e71400a25e3565c4f849d07"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "ndk"
@@ -570,6 +593,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d6ea3c4595b96363c13943497db34af4460fb474a95c43f4446ad341b8c9785"
 dependencies = [
  "toml",
+]
+
+[[package]]
+name = "proc-macro-error"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
+dependencies = [
+ "proc-macro-error-attr",
+ "proc-macro2",
+ "quote",
+ "syn",
+ "version_check",
+]
+
+[[package]]
+name = "proc-macro-error-attr"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "version_check",
 ]
 
 [[package]]
