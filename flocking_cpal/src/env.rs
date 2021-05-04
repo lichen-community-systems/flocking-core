@@ -41,7 +41,7 @@ impl Environment {
             block_size: Some(64)
         };
 
-        let settings = flocking::utils::merge(
+        let settings = flocking::utils::merge_options(
             &defaults, Some(&options));
         let host = find_host(&settings);
 

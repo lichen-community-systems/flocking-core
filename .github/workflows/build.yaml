@@ -62,6 +62,7 @@ jobs:
         with:
           command: build
 
+      # Run examples
       - name: run print_audio_tree example
         env:
           RUST_BACKTRACE: 1
@@ -69,3 +70,11 @@ jobs:
         with:
           command: run
           args: --example print_audio_tree
+
+      - name: run run_composition example
+        env:
+          RUST_BACKTRACE: 1
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --example run_composition flocking_cpal/examples/run_composition/test_composition.json

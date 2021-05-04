@@ -44,6 +44,7 @@ mod tests {
         };
 
         let actual = json::parse_composition(composition_spec_json).unwrap();
-        assert_eq!(expected, actual);
+        assert_eq!(expected, actual,
+            "EnvironmentSettings were correctly parsed from JSON");
     }
 }
