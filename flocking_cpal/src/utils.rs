@@ -39,7 +39,7 @@ fn print_device_config(config: cpal::SupportedStreamConfigRange) {
         cpal::SupportedBufferSize::Unknown => "unknown".to_string()
     };
 
-    println!("    * {} KHz, {} channels, {:?}, {} buffer size range",
+    println!("        * {} KHz, {} channels, {:?}, {} buffer size range",
         config.max_sample_rate().0,
         config.channels(),
         config.sample_format(),
@@ -48,25 +48,28 @@ fn print_device_config(config: cpal::SupportedStreamConfigRange) {
 }
 
 fn print_device_configs(device: &cpal::Device) {
+
     match device.supported_input_configs() {
         Ok(supported_input_configs) => {
+            println!("      Input configurations:");
             for input_config in supported_input_configs {
                 print_device_config(input_config);
             }
         },
         Err(e) => {
-            println!("      No output configurations found. {}", e);
+            println!("      Can't access input configurations. {}", e);
         }
     };
 
     match device.supported_output_configs() {
         Ok(supported_output_configs) => {
+            println!("      Output configurations:");
             for output_config in supported_output_configs {
                 print_device_config(output_config);
             }
         },
         Err(e) => {
-            println!("      No output configurations found. {}", e);
+            println!("      Can't access output configurations. {}", e);
         }
     };
 }

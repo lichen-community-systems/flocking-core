@@ -1,5 +1,7 @@
-use std::{fs, env, process, error::Error};
 use flocking;
+use std::{fs, env, process, error::Error};
+use cpal::traits::DeviceTrait;
+
 
 extern crate flocking_cpal;
 
@@ -11,6 +13,11 @@ fn run (composition_file_path: String) -> Result<(), Box<dyn Error>> {
     let environment = flocking_cpal::env::Environment::new(composition_spec.environment);
 
     println!("Selected host: {:?}", environment.host.id());
+    println!("Selected output device: {}",
+        environment.host_audio.output.unwrap().name().unwrap());
+    println!("Selected input device: {}",
+        environment.host_audio.input.unwrap().name().unwrap());
+
     println!("{:?}", environment.settings);
 
     Ok(())

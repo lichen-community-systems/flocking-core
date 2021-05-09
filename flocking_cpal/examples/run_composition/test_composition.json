@@ -1,6 +1,7 @@
 {
     "environment": {
-        "host": "WASAPI",
+        "host": "Wasapi",
+        "output_device": "EIE",
         "sample_rate": 44100,
         "buffer_size": 64,
         "block_size": 64
