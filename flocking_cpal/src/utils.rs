@@ -17,6 +17,13 @@ pub fn print_audio_tree() {
     }
 }
 
+pub fn device_display_name(device: &cpal::Device) -> String {
+    match device.name() {
+        Ok(device_name) => device_name,
+        Err(_e) => String::from("Unnamed Device")
+    }
+}
+
 fn print_host(host_id: cpal::HostId, default_host_id: cpal::HostId) {
     let host_label = {
         if host_id == default_host_id {
@@ -111,11 +118,7 @@ fn label_for_device(device: &cpal::Device, host: &cpal::Host) -> String {
 
 fn print_device(device: &cpal::Device, host: &cpal::Host) {
     let device_name_label = label_for_device(device, host);
-
-    let formatted_device_name = match device.name() {
-        Ok(device_name) => device_name,
-        Err(_e) => String::from("Unnamed Device")
-    };
+    let formatted_device_name = device_display_name(device);
 
     println!("  * {} {}", formatted_device_name, device_name_label);
     print_device_configs(device);

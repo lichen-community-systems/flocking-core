@@ -13,10 +13,16 @@ fn run (composition_file_path: String) -> Result<(), Box<dyn Error>> {
     let environment = flocking_cpal::env::Environment::new(composition_spec.environment);
 
     println!("Selected host: {:?}", environment.host.id());
-    println!("Selected output device: {}",
-        environment.host_audio.output.unwrap().name().unwrap());
-    println!("Selected input device: {}",
-        environment.host_audio.input.unwrap().name().unwrap());
+
+    if let Some(output_device) = environment.host_audio.output {
+        println!("Selected output device: {}",
+            flocking_cpal::utils::device_display_name(&output_device));
+    }
+
+    if let Some(input_device) = environment.host_audio.input {
+        println!("Selected input device: {}",
+        flocking_cpal::utils::device_display_name(&input_device));
+    }
 
     println!("{:?}", environment.settings);
 
