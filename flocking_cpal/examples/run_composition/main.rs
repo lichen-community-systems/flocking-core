@@ -1,11 +1,9 @@
 use flocking;
 use std::{fs, env, process, error::Error};
-use cpal::traits::DeviceTrait;
-
 
 extern crate flocking_cpal;
 
-fn run (composition_file_path: String) -> Result<(), Box<dyn Error>> {
+fn run(composition_file_path: String) -> Result<(), Box<dyn Error>> {
     let compostion_json = fs::read_to_string(composition_file_path)?;
 
     let composition_spec = flocking::json::parse_composition(&compostion_json)?;
@@ -29,8 +27,17 @@ fn run (composition_file_path: String) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+fn check_arguments(args: &Vec<String>) {
+    if args.len() < 2 {
+        println!("Error: No composition file was specified as an argument.");
+        process::exit(1);
+    }
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
+    check_arguments(&args);
+
     let composition_file_path = args[1].clone();
     println!("{}", composition_file_path);
 
