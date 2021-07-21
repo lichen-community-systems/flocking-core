@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 flocking = { path = "../flocking" }
 cpal = "0.13.3"
+merge = { version = "0.1.0", default-features = false, features = ["derive"]}
 
 [target.'cfg(target_os = "linux")'.dependencies]
 cpal = {version = "0.13.3", features = ["jack"]}
