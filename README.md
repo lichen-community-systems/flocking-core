@@ -1,6 +1,8 @@
 # Flocking Core (in Rust)
 
-This project is an early-stage effort to rewrite and redesign the core signal processing layers of [Flocking](https://flockingjs.org) in Rust. The goal is to support instruments that can be deployed without modification across different devices and platforms, with a particular emphasis on the Web and embedded platforms such as Eurorack.
+This project is inactive and has been replaced with [Signaletic](https://github.com/continuing-creativity/signaletic), which aims to address the same issues but in written C, which was found to be more amenable to use on embedded hardware.
+
+This project was an early-stage effort to rewrite and redesign the core signal processing layers of [Flocking](https://flockingjs.org) in Rust. The goal is to support instruments that can be deployed without modification across different devices and platforms, with a particular emphasis on the Web and embedded platforms such as Eurorack.
 
 ## Goals
 
